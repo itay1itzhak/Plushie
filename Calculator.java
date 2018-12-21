@@ -1,3 +1,4 @@
+package Plushie;
 public class Calculator {
 	static double DrawX = 0, DrawY = 0;
 	static double CalculatePositionX(double[] ViewFrom, double[] ViewTo, double x, double y, double z)

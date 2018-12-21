@@ -1,3 +1,4 @@
+package Plushie;
 import java.awt.Color;
 import java.awt.Polygon;
 

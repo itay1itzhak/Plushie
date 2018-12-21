@@ -1,3 +1,4 @@
+package Plushie;
 public class Vector {
 	double x = 0, y = 0, z = 0;
 	public Vector(double x, double y, double z)
