@@ -58,4 +58,9 @@ public class Calculator {
 		Vector V = new Vector(xRot, yRot, 0);
 		return V;
 	}
+	
+	//TODO
+//	static Polygon2D parseText(){
+//		return new Polygon2D();
+//	}
 }
