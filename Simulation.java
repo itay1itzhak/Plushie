@@ -11,7 +11,7 @@ public class Simulation {
 	 public final static double ALPHA = 0.01;
 	 public final static double BETTA = 1;
 	
-	public void inflate(Polygon3D[] poly3d, int patchNum, int numOfPatches) {
+	public static void inflate(Polygon3D[] poly3d, int patchNum, int numOfPatches) {
 		for (int i=0; i<NUM_OF_CYCLES; i++){
 			internalPressure(poly3d, patchNum, numOfPatches);
 			adjustEdges(poly3d, patchNum, numOfPatches);
@@ -20,7 +20,7 @@ public class Simulation {
 
 	}
 	
-	public void internalPressure(Polygon3D[] poly3d, int patchNum, int numOfPatches) {
+	public static void internalPressure(Polygon3D[] poly3d, int patchNum, int numOfPatches) {
 		for (int i=0; i<poly3d[patchNum].x.length; i++){ // for each vertex
 			Vector sumOfAllDisplacment = new Vector(0,0,0);
 			double sumOfAllareas = 0;
@@ -34,14 +34,14 @@ public class Simulation {
 			    sumOfAllareas += area;
 			    sumOfAllDisplacment.addVector(normal.mulScalar(ALPHA * area/sumOfAllareas));
 			}
-			
+
 			poly3d[patchNum].x[i] += sumOfAllDisplacment.x;
 			poly3d[patchNum].y[i] += sumOfAllDisplacment.y;
 			poly3d[patchNum].z[i] += sumOfAllDisplacment.z;
 		}			
 	}
 	
-	public Set<Integer> getPolyNeighborsIndices(Polygon3D[] poly3d, int patchNum, int numOfPatches,int currectVertex) {
+	public static Set<Integer> getPolyNeighborsIndices(Polygon3D[] poly3d, int patchNum, int numOfPatches,int currectVertex) {
 		Set<Integer> neighbors = new HashSet<Integer>();
 		double currentX = poly3d[patchNum].x[currectVertex];
 		double currentY = poly3d[patchNum].y[currectVertex];
@@ -58,14 +58,15 @@ public class Simulation {
 		
 	}
 	
-	public boolean isVertexInPatch(Polygon3D poly3d, int vertexIndex, double currentX, double currentY, double currentZ) {
-		if ((poly3d.x[vertexIndex] == currentX)&&(poly3d.y[vertexIndex] == currentY)&&(poly3d.z[vertexIndex] == currentZ))
-			return true;
-		return false;
+	public static boolean isVertexInPatch(Polygon3D poly3d, int vertexIndex, double currentX, double currentY, double currentZ) {
+		return true;
+		//if ((poly3d.x[vertexIndex] == currentX)&&(poly3d.y[vertexIndex] == currentY)&&(poly3d.z[vertexIndex] == currentZ))
+			//return true;
+		//return false;
 	}
 	
 	//TODO
-	public void adjustEdges(Polygon3D[] poly3d, int patchNum, int numOfPatches) {
+	public static void adjustEdges(Polygon3D[] poly3d, int patchNum, int numOfPatches) {
 		
 		
 		return;
@@ -80,7 +81,7 @@ public class Simulation {
 //		}			
 	}
 	
-	public void inflateArray(Polygon3D[] poly3d, int numOfPatches) {
+	public static void inflateArray(Polygon3D[] poly3d, int numOfPatches) {
 		for (int i=0; i<numOfPatches; i++)
 			inflate(poly3d, i, numOfPatches);
 	}
@@ -88,7 +89,7 @@ public class Simulation {
 	
 	public static Polygon3D from2Dto3D(Polygon2D polygons2d) {
 		double[] z = new double[polygons2d.P.xpoints.length];
-		Arrays.fill(z,0.0);
+		Arrays.fill(z,1);
 		Polygon3D result = new Polygon3D(Util.intArrayToDouble(polygons2d.P.xpoints),
 							Util.intArrayToDouble(polygons2d.P.ypoints), z, polygons2d.c);
 		return result;

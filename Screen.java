@@ -24,23 +24,28 @@ public class Screen extends JPanel implements KeyListener{
 		addKeyListener(this);
 		setFocusable(true);
 		//2d patches
-		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{10, 200, 10}, new double[]{10, 200, 400}, Color.black);
-		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{10, 50, 100, 200, 150, 10}, new double[]{450, 550, 600, 650, 700, 800}, Color.blue);
+		//DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{10, 200, 10}, new double[]{10, 200, 400}, Color.black);
+		//DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{10, 50, 100, 200, 150, 10}, new double[]{450, 550, 600, 650, 700, 800}, Color.blue);
 		
 		//3d patches
 		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{1, 2, 2, 2, 2}, new double[]{1, 3, 3, 3, 4}, Color.black);
 		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{2, 3, 3, 3, 3}, new double[]{2, 4, 4, 4, 5}, Color.blue);
 		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{1, 2, 3, 3, 3, 3}, new double[]{1, 2, 4, 4, 4, 5}, Color.pink);
 		//DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{1, 2, 2}, new double[]{1, 3, 4}, Color.black);
-//		patches[0] = DrawablePolygons[0];
-//		patches[1] = DrawablePolygons[1];
-//		patches[2] = DrawablePolygons[2];	
-//
-//		
-//		patches3D = Simulation.arrayFrom2Dto3D(patches,NumberOfPatches);
-//		Polygon3Ds[NumberOf3Polygon3Ds-3] = patches3D[0];
-//		Polygon3Ds[NumberOf3Polygon3Ds-2] = patches3D[1];
-//		Polygon3Ds[NumberOf3Polygon3Ds-1] = patches3D[2];
+		patches[0] = DrawablePolygons[0];
+		patches[1] = DrawablePolygons[1];
+		patches[2] = DrawablePolygons[2];	
+
+		
+		patches3D = Simulation.arrayFrom2Dto3D(patches,NumberOfPatches);
+		Simulation.inflateArray(patches3D,NumberOfPatches);
+		
+		Polygon3Ds[NumberOf3Polygon3Ds-3] = patches3D[0];
+		Polygon3Ds[NumberOf3Polygon3Ds-2] = patches3D[1];
+		Polygon3Ds[NumberOf3Polygon3Ds-1] = patches3D[2];
+		
+
+		
 //		
 //		//cube
 //		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{0, 0, 2, 2},  new double[]{0, 0, 0, 0}, Color.gray);

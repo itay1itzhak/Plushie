@@ -71,14 +71,18 @@ public class Polygon3D {
 		return new Vector(Nx,Ny,Nz);
 	}
 	
+	//TODO - This function is not good! fix pls
 	public static double getArea(double[] x, double[] y, double[] z) {
 		  double area = 0;
 		  int j = x.length-1;  // The last vertex is the 'previous' one to the first
 
-		  for (int i=0; i<x.length; i++)
-		    { area = area +  (x[j]+x[i]) * (y[j]-y[i]) * (z[j]-z[i]); 
-		      j = i;
-		    }
+		  for (int i=0; i<x.length; i++){ 
+			  System.out.println(x[i]+"*"+x[j]+" "+y[i]+"*"+y[j]+" "+z[i]+"*"+z[j]);
+			  area +=  (x[j]+x[i]) * (y[j]-y[i]) * (z[j]-z[i]); 
+		      System.out.println(area);
+			  j = i;
+		  }
+		  System.out.println("area: "+area);
 		  return area/2;
 	}
 
