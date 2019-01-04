@@ -6,6 +6,8 @@ public class Polygon3D {
 	Color c;
 	double[] x, y, z;
 	int poly = 0;
+	Vector normal;
+	double area;
 
 	public Polygon3D(double[] x, double[] y, double[] z, Color c) {
 		Screen.NumberOf3Polygon3Ds++;
@@ -13,6 +15,8 @@ public class Polygon3D {
 		this.y = y;
 		this.z = z;
 		this.c = c;
+		this.normal = getNormal(x,y,z);
+		this.area = getArea(x,y,z);
 		createPolygon();
 	}
 
@@ -55,4 +59,13 @@ public class Polygon3D {
 				+ (Screen.ViewFrom[1] - y[i]) * (Screen.ViewFrom[1] - y[i])
 				+ (Screen.ViewFrom[2] - z[i]) * (Screen.ViewFrom[2] - z[i]));
 	}
+	
+	public static Vector getNormal(double[] x, double[] y, double[] z) {
+		return new Vector(0,0,0);
+	}
+	
+	public static double getArea(double[] x, double[] y, double[] z) {
+		return 0.0;
+	}
+
 }

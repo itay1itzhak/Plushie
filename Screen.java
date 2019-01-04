@@ -9,43 +9,47 @@ public class Screen extends JPanel implements KeyListener{
 	double SleepTime = 1000/30, lastRefresh = 0;
 	static double[] ViewFrom = new double[] {10, 10, 10};
 	static double[] ViewTo = new double[] {1, 1, 1.5};
-	static int NumberOfPolygons = 0, NumberOf3Polygon3Ds = 0, NumberOfPatches = 0;
+	static int NumberOfPolygons = 0, NumberOf3Polygon3Ds = 0, NumberOfPatches = 3;
 	static Polygon2D[] DrawablePolygons = new Polygon2D[100];
 	static Polygon3D[] Polygon3Ds = new Polygon3D[100];
 	int[] NewOrder;
 	boolean[] Keys = new boolean[8];
 	
-	static Polygon2D[] patches = new Polygon2D[2];
-	static Polygon3D[] patches3d;
+	static Polygon2D[] patches = new Polygon2D[NumberOfPatches];
+	static Polygon3D[] patches3D;
 	
 	
 	public Screen()
 	{
 		addKeyListener(this);
 		setFocusable(true);
+		//2d patches
+		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{10, 200, 10}, new double[]{10, 200, 400}, Color.black);
+		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{10, 50, 100, 200, 150, 10}, new double[]{450, 550, 600, 650, 700, 800}, Color.blue);
+		
+		//3d patches
 		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{1, 2, 2, 2, 2}, new double[]{1, 3, 3, 3, 4}, Color.black);
 		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{2, 3, 3, 3, 3}, new double[]{2, 4, 4, 4, 5}, Color.blue);
 		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{1, 2, 3, 3, 3, 3}, new double[]{1, 2, 4, 4, 4, 5}, Color.pink);
 		//DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{1, 2, 2}, new double[]{1, 3, 4}, Color.black);
-		patches[0] = DrawablePolygons[0];
-		patches[1] = DrawablePolygons[1];
-		patches[2] = DrawablePolygons[2];	
-		NumberOfPatches = 3;
-		
-		patches3d = Simulation.arrayFrom2Dto3D(patches,NumberOfPatches);
-		Polygon3Ds[NumberOf3Polygon3Ds-2] = patches3d[0];
-		Polygon3Ds[NumberOf3Polygon3Ds-1] = patches3d[1];
-		
-		
-		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{0, 0, 2, 2},  new double[]{0, 0, 0, 0}, Color.gray);
-		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{0, 0, 2, 2},  new double[]{3, 3, 3, 3}, Color.gray);
-		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{0, 0, 0, 0},  new double[]{0, 0, 3, 3}, Color.gray);
-		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{2, 2, 2, 2},  new double[]{0, 0, 3, 3}, Color.gray);
-		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 0, 0, 0}, new double[]{0, 2, 2, 0},  new double[]{0, 0, 3, 3}, Color.gray);
-		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{2, 2, 2, 2}, new double[]{0, 2, 2, 0},  new double[]{0, 0, 3, 3}, Color.gray);
-		//for(int i = -4; i < 5; i++)
-		//	for(int j = -4; j < 5; j++)
-		//		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{i, i, i + 1, i + 1}, new double[]{j, j + 1, j + 1, j},  new double[]{0, 0, 0, 	0}, Color.green	);
+//		patches[0] = DrawablePolygons[0];
+//		patches[1] = DrawablePolygons[1];
+//		patches[2] = DrawablePolygons[2];	
+//
+//		
+//		patches3D = Simulation.arrayFrom2Dto3D(patches,NumberOfPatches);
+//		Polygon3Ds[NumberOf3Polygon3Ds-3] = patches3D[0];
+//		Polygon3Ds[NumberOf3Polygon3Ds-2] = patches3D[1];
+//		Polygon3Ds[NumberOf3Polygon3Ds-1] = patches3D[2];
+//		
+//		//cube
+//		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{0, 0, 2, 2},  new double[]{0, 0, 0, 0}, Color.gray);
+//		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{0, 0, 2, 2},  new double[]{3, 3, 3, 3}, Color.gray);
+//		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{0, 0, 0, 0},  new double[]{0, 0, 3, 3}, Color.gray);
+//		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{2, 2, 2, 2},  new double[]{0, 0, 3, 3}, Color.gray);
+//		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 0, 0, 0}, new double[]{0, 2, 2, 0},  new double[]{0, 0, 3, 3}, Color.gray);
+//		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{2, 2, 2, 2}, new double[]{0, 2, 2, 0},  new double[]{0, 0, 3, 3}, Color.gray);
+
 	}
 	
 	public void paintComponent(Graphics g)
@@ -54,17 +58,17 @@ public class Screen extends JPanel implements KeyListener{
 		
 		g.clearRect(0, 0, 2000, 1200);
 
-		for(int i = 0; i < NumberOf3Polygon3Ds; i++)
+		for(int i = 0; i < NumberOf3Polygon3Ds; i++) //for drawing 3d patches
 			Polygon3Ds[i].updatePolygon();
 		
 		setOrder();
 
-		for(int i = 0; i < NumberOfPolygons; i++)
+		for(int i = 0; i < NumberOfPolygons; i++) 
 			DrawablePolygons[NewOrder[i]].drawPolygon(g);
 		SleepAndRefresh();
 	}
 	
-	void setOrder()
+	void setOrder() //for viewing the plush toy in correct order of polygons
 	{
 		double[] k = new double[NumberOfPolygons];
 		NewOrder = new int[NumberOfPolygons];
@@ -77,7 +81,7 @@ public class Screen extends JPanel implements KeyListener{
 		
 	    double temp;
 	    int tempr;	    
-		for (int a = 0; a < k.length-1; a++)
+		for (int a = 0; a < k.length-1; a++) // just sorting polygons so we'll see them in 3D right
 			for (int b = 0; b < k.length-1; b++)
 				if(k[b] < k[b + 1])
 				{

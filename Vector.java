@@ -20,4 +20,22 @@ public class Vector {
 				x * V.y - y * V.x);
 		return CrossVector;
 	}
+	
+	Vector mulScalar(double d)
+	{
+		Vector newVector = new Vector(
+				d * this.x,
+				d * this.y,
+				d * this.z);
+		return newVector;
+	}
+	
+	Vector addVector(Vector V)
+	{
+		Vector newVector = new Vector(
+				this.x + V.x,
+				this.y + V.y,
+				this.z + V.z);
+		return newVector;
+	}
 }
