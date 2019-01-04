@@ -68,15 +68,16 @@ public class Simulation {
 	public void adjustEdges(Polygon3D[] poly3d, int patchNum, int numOfPatches) {
 		
 		
+		return;
 		
 		
 		
 		
-		for (int i=0; i<poly3d[patchNum].x.length; i++){
-			poly3d[patchNum].x[i] = poly3d[patchNum].x[i] + 0;
-			poly3d[patchNum].y[i] = 0;
-			poly3d[patchNum].z[i] = 0;
-		}			
+//		for (int i=0; i<poly3d[patchNum].x.length; i++){
+//			poly3d[patchNum].x[i] = poly3d[patchNum].x[i] + 0;
+//			poly3d[patchNum].y[i] = 0;
+//			poly3d[patchNum].z[i] = 0;
+//		}			
 	}
 	
 	public void inflateArray(Polygon3D[] poly3d, int numOfPatches) {

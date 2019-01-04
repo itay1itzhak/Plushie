@@ -61,11 +61,25 @@ public class Polygon3D {
 	}
 	
 	public static Vector getNormal(double[] x, double[] y, double[] z) {
-		return new Vector(0,0,0);
+		Vector U = new Vector(x[1]-x[0],y[1]-y[0],z[1]-z[0]);
+		Vector V = new Vector(x[2]-x[0],y[2]-y[0],z[2]-z[0]);
+		
+		double Nx = U.y*V.z - U.z*V.y;
+		double Ny = U.z*V.x - U.x*V.z;
+		double Nz = U.x*V.y - U.y*V.x;
+		
+		return new Vector(Nx,Ny,Nz);
 	}
 	
 	public static double getArea(double[] x, double[] y, double[] z) {
-		return 0.0;
+		  double area = 0;
+		  int j = x.length-1;  // The last vertex is the 'previous' one to the first
+
+		  for (int i=0; i<x.length; i++)
+		    { area = area +  (x[j]+x[i]) * (y[j]-y[i]) * (z[j]-z[i]); 
+		      j = i;
+		    }
+		  return area/2;
 	}
 
 }
