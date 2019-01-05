@@ -1,20 +1,26 @@
 package Plushie;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Simulation {
 	
-	 public final static int NUM_OF_CYCLES = 30;
+	 public final static int NUM_OF_CYCLES_INFALTE = 30;
+	 public final static int NUM_OF_CYCLES_ADJUST = 10;
 	 public final static double ALPHA = 0.02;
 	 public final static double BETTA = 1;
 	
 	public static void inflate(Polygon3D[] poly3d, int patchNum, int numOfPatches) {
-		for (int i=0; i<NUM_OF_CYCLES; i++){
+		Polygon3D[] poly3dOrginal =  new Polygon3D[poly3d.length];
+		System.arraycopy(poly3d,0,poly3dOrginal,0,poly3d.length);
+		for (int i=0; i<NUM_OF_CYCLES_INFALTE; i++){
 			internalPressure(poly3d, patchNum, numOfPatches);
-			adjustEdges(poly3d, patchNum, numOfPatches);
+			for (int j=0; j<NUM_OF_CYCLES_ADJUST; j++)
+				adjustEdges(poly3d,poly3dOrginal, patchNum, numOfPatches);
 		}
 
 
@@ -71,20 +77,70 @@ public class Simulation {
 	}
 	
 	//TODO
-	public static void adjustEdges(Polygon3D[] poly3d, int patchNum, int numOfPatches) {
-		
-		
-		return;
-		
-		
-		
-		
-//		for (int i=0; i<poly3d[patchNum].x.length; i++){
-//			poly3d[patchNum].x[i] = poly3d[patchNum].x[i] + 0;
-//			poly3d[patchNum].y[i] = 0;
-//			poly3d[patchNum].z[i] = 0;
-//		}			
+	public static void adjustEdges(Polygon3D[] poly3d, Polygon3D[] poly3dOrginal, int patchNum, int numOfPatches) {
+
+		for (int i=0; i<poly3d[patchNum].x.length; i++){ // for each vertex
+			Vector sumOfAllDisplacment = new Vector(0,0,0);
+			double sumOfAllareas = 0;
+			double sumOfAllareasWithForces = 0;
+			double area;
+			
+			Set<Integer> neighbors = getPolyNeighborsIndices(poly3d, patchNum, numOfPatches,i);
+			List<Vector> neighborVercties;
+			List<Vector> neighborVerctiesOrg;
+			Vector vi = new Vector(poly3d[patchNum].x[i],poly3d[patchNum].y[i],poly3d[patchNum].z[i]);
+			Vector viOrg = new Vector(poly3dOrginal[patchNum].x[i],poly3dOrginal[patchNum].y[i],poly3dOrginal[patchNum].z[i]);
+			Vector vj,vjOrg;
+			Vector force;
+			
+			for (int neighbor : neighbors) {
+				neighborVercties = getNeighborVercties(poly3d[patchNum],poly3d[neighbor],i);
+				neighborVerctiesOrg = getNeighborVercties(poly3dOrginal[patchNum],poly3dOrginal[neighbor],i);
+				for (int j=0; j< neighborVercties.size(); j++){
+					vj = neighborVercties.get(j);
+					vjOrg = neighborVerctiesOrg.get(j);
+					area = poly3d[neighbor].area;
+				    sumOfAllareas += area;
+				    force = getForce(vi,vj,viOrg,vjOrg);
+				    sumOfAllDisplacment = sumOfAllDisplacment.addVector(force.mulScalar(BETTA * area));
+				}
+			    //System.out.println("neighbor: "+neighbor+" area: "+area);
+			    //System.out.println("add to dis: "+(ALPHA * area));
+			}
+			if (sumOfAllareas > 0)
+				sumOfAllDisplacment.mulScalar(1/sumOfAllareas);
+			//if ((sumOfAllDisplacment.x!=0)||(sumOfAllDisplacment.y!=0)||(sumOfAllDisplacment.z!=0))
+				System.out.println("dis x:"+sumOfAllDisplacment.x+" y:"+sumOfAllDisplacment.y+" z:"+sumOfAllDisplacment.z);
+			
+			poly3d[patchNum].x[i] += sumOfAllDisplacment.x;
+			poly3d[patchNum].y[i] += sumOfAllDisplacment.y;
+			poly3d[patchNum].z[i] += sumOfAllDisplacment.z;
+		}			
 	}
+	
+	public static List<Vector> getNeighborVercties(Polygon3D current,Polygon3D neighbor,int vertexIndex){
+		List<Vector> neighborVercties = new ArrayList<Vector>();
+		for (int i=0; i<neighbor.x.length;i++){
+			if ((current.x[vertexIndex] != neighbor.x[i])||
+					(current.y[vertexIndex] != neighbor.y[i])||
+					(current.z[vertexIndex] != neighbor.z[i])){
+				neighborVercties.add(new Vector(neighbor.x[i],neighbor.y[i],neighbor.z[i]));
+			}//if
+		}//for
+		return neighborVercties;
+	}
+	
+	public static Vector getForce(Vector vi,Vector vj,Vector viOrg,Vector vjOrg){
+		Vector force = new Vector(0,0,0);
+		double lij = Util.getDistance(viOrg,vjOrg);
+		double currentDistance = Util.getDistance(vi,vj);
+		if ((currentDistance >= lij)&&(currentDistance > 0)){
+			force = vi.addVector(vj.mulScalar(-1));
+			force = force.mulScalar(0.5*((currentDistance-lij)/currentDistance));
+		}
+		return force;
+	}
+	
 	
 	public static void inflateArray(Polygon3D[] poly3d, int numOfPatches) {
 		for (int i=0; i<numOfPatches; i++)

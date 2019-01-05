@@ -67,8 +67,7 @@ public class Polygon3D {
 		double Nx = U.y*V.z - U.z*V.y;
 		double Ny = U.z*V.x - U.x*V.z;
 		double Nz = U.x*V.y - U.y*V.x;
-		
-		System.out.println("noraml:"+Nx+" "+Ny+" "+Nz);
+	
 		return new Vector(Nx,Ny,Nz);
 	}
 	
@@ -80,7 +79,6 @@ public class Polygon3D {
 		// tri area = 1/2 * | u x v |
 		double absSq = (cross.x * cross.x) + (cross.y * cross.y) + (cross.z * cross.z);
 		double area3D = Math.sqrt(absSq) / 2;
-		System.out.println(area3D);
 		return area3D;
 	}
 

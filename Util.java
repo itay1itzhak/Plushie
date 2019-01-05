@@ -13,6 +13,10 @@ public class Util {
 		return result;
 	}
 	
+	public static double getDistance(Vector vi,Vector vj){
+		return Math.sqrt((vi.x-vj.x)*(vi.x-vj.x) + (vi.x-vj.y)*(vi.x-vj.y) + (vi.x-vj.z)*(vi.x-vj.z));
+	}
+	
 	//Not Complete
 	public static void textToPatches(File f) {
 		Screen.DrawablePolygons[Screen.NumberOfPolygons] = new Polygon2D(new double[]{1, 2, 2, 2, 2}, new double[]{1, 3, 3, 3, 4}, Color.black);
