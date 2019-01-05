@@ -8,7 +8,7 @@ import java.util.Set;
 public class Simulation {
 	
 	 public final static int NUM_OF_CYCLES = 30;
-	 public final static double ALPHA = 0.01;
+	 public final static double ALPHA = 0.02;
 	 public final static double BETTA = 1;
 	
 	public static void inflate(Polygon3D[] poly3d, int patchNum, int numOfPatches) {
@@ -32,9 +32,15 @@ public class Simulation {
 			    normal = poly3d[neighbor].normal;
 			    area = poly3d[neighbor].area;
 			    sumOfAllareas += area;
-			    sumOfAllDisplacment.addVector(normal.mulScalar(ALPHA * area/sumOfAllareas));
+			    sumOfAllDisplacment = sumOfAllDisplacment.addVector(normal.mulScalar(ALPHA * area));
+			    //System.out.println("neighbor: "+neighbor+" area: "+area);
+			    //System.out.println("add to dis: "+(ALPHA * area));
 			}
-
+			if (sumOfAllareas > 0)
+				sumOfAllDisplacment.mulScalar(1/sumOfAllareas);
+			
+			//System.out.println("dis x:"+sumOfAllDisplacment.x+" y:"+sumOfAllDisplacment.y+" z:"+sumOfAllDisplacment.z);
+			
 			poly3d[patchNum].x[i] += sumOfAllDisplacment.x;
 			poly3d[patchNum].y[i] += sumOfAllDisplacment.y;
 			poly3d[patchNum].z[i] += sumOfAllDisplacment.z;
@@ -59,10 +65,9 @@ public class Simulation {
 	}
 	
 	public static boolean isVertexInPatch(Polygon3D poly3d, int vertexIndex, double currentX, double currentY, double currentZ) {
-		return true;
-		//if ((poly3d.x[vertexIndex] == currentX)&&(poly3d.y[vertexIndex] == currentY)&&(poly3d.z[vertexIndex] == currentZ))
-			//return true;
-		//return false;
+		if ((poly3d.x[vertexIndex] == currentX)&&(poly3d.y[vertexIndex] == currentY)&&(poly3d.z[vertexIndex] == currentZ))
+			return true;
+		return false;
 	}
 	
 	//TODO

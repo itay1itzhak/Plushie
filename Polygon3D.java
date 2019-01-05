@@ -16,7 +16,7 @@ public class Polygon3D {
 		this.z = z;
 		this.c = c;
 		this.normal = getNormal(x,y,z);
-		this.area = getArea(x,y,z);
+		this.area = getTriangleArea(x,y,z);
 		createPolygon();
 	}
 
@@ -68,22 +68,20 @@ public class Polygon3D {
 		double Ny = U.z*V.x - U.x*V.z;
 		double Nz = U.x*V.y - U.y*V.x;
 		
+		System.out.println("noraml:"+Nx+" "+Ny+" "+Nz);
 		return new Vector(Nx,Ny,Nz);
 	}
 	
 	//TODO - This function is not good! fix pls
-	public static double getArea(double[] x, double[] y, double[] z) {
-		  double area = 0;
-		  int j = x.length-1;  // The last vertex is the 'previous' one to the first
-
-		  for (int i=0; i<x.length; i++){ 
-			  System.out.println(x[i]+"*"+x[j]+" "+y[i]+"*"+y[j]+" "+z[i]+"*"+z[j]);
-			  area +=  (x[j]+x[i]) * (y[j]-y[i]) * (z[j]-z[i]); 
-		      System.out.println(area);
-			  j = i;
-		  }
-		  System.out.println("area: "+area);
-		  return area/2;
+	public static double getTriangleArea(double[] x, double[] y, double[] z) {
+		Vector u = new Vector(x[1] - x[0],y[1] - y[0],z[1] - z[0]);
+		Vector v = new Vector(x[2] - x[1],y[2] - y[1],z[2] - z[1]);
+		Vector cross = u.CrossProduct(v);
+		// tri area = 1/2 * | u x v |
+		double absSq = (cross.x * cross.x) + (cross.y * cross.y) + (cross.z * cross.z);
+		double area3D = Math.sqrt(absSq) / 2;
+		System.out.println(area3D);
+		return area3D;
 	}
 
 }
