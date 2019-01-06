@@ -34,7 +34,7 @@ public class Util {
 		    	data = str.split(";");
 		    	x = processLine(data[0].split(","));
 		    	y = processLine(data[1].split(","));
-		    	Screen.DrawablePolygons[Screen.NumberOfPolygons] = new Polygon2D(x,y, Color.black); 
+		    	Screen.DrawablePolygons[Screen.NumberOfPolygons] = new Polygon2D(x,y, Color.green);
 		    	Screen.NumberOfPatches++;
 		    }
 		    Screen.patches = new Polygon2D[Screen.NumberOfPatches];
@@ -62,6 +62,15 @@ public class Util {
 	        i++;
 	    }
 	    return doublearray;
+	}
+	
+	public static void drawCube(){
+		Screen.Polygon3Ds[Screen.NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{0, 0, 2, 2},  new double[]{0, 0, 0, 0}, Color.gray);
+		Screen.Polygon3Ds[Screen.NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{0, 0, 2, 2},  new double[]{3, 3, 3, 3}, Color.gray);
+		Screen.Polygon3Ds[Screen.NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{0, 0, 0, 0},  new double[]{0, 0, 3, 3}, Color.gray);
+		Screen.Polygon3Ds[Screen.NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{2, 2, 2, 2},  new double[]{0, 0, 3, 3}, Color.gray);
+		Screen.Polygon3Ds[Screen.NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 0, 0, 0}, new double[]{0, 2, 2, 0},  new double[]{0, 0, 3, 3}, Color.gray);
+		Screen.Polygon3Ds[Screen.NumberOf3Polygon3Ds] = new Polygon3D(new double[]{2, 2, 2, 2}, new double[]{0, 2, 2, 0},  new double[]{0, 0, 3, 3}, Color.gray);
 	}
 
 }

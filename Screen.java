@@ -44,21 +44,8 @@ public class Screen extends JPanel implements KeyListener{
 		
 		for (int i=0; i<NumberOf3Polygon3Ds;i++)
 			Polygon3Ds[i] = patches3D[i];
-//		Polygon3Ds[NumberOf3Polygon3Ds-3] = patches3D[0];
-//		Polygon3Ds[NumberOf3Polygon3Ds-2] = patches3D[1];
-//		Polygon3Ds[NumberOf3Polygon3Ds-1] = patches3D[2];
-		
-
-		
-//		
-//		//cube
-//		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{0, 0, 2, 2},  new double[]{0, 0, 0, 0}, Color.gray);
-//		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{0, 0, 2, 2},  new double[]{3, 3, 3, 3}, Color.gray);
-//		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{0, 0, 0, 0},  new double[]{0, 0, 3, 3}, Color.gray);
-//		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{2, 2, 2, 2},  new double[]{0, 0, 3, 3}, Color.gray);
-//		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 0, 0, 0}, new double[]{0, 2, 2, 0},  new double[]{0, 0, 3, 3}, Color.gray);
-//		Polygon3Ds[NumberOf3Polygon3Ds] = new Polygon3D(new double[]{2, 2, 2, 2}, new double[]{0, 2, 2, 0},  new double[]{0, 0, 3, 3}, Color.gray);
-
+		//cube
+		//drawCube();
 	}
 	
 	public void paintComponent(Graphics g)
