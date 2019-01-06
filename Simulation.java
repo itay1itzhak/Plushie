@@ -149,7 +149,7 @@ public class Simulation {
 	
 	
 	public static Polygon3D from2Dto3D(Polygon2D polygons2d) {
-		double[] z = new double[polygons2d.P.xpoints.length];
+		double[] z = new double[polygons2d.P.xpoints.length]; 
 		Arrays.fill(z,1);
 		Polygon3D result = new Polygon3D(Util.intArrayToDouble(polygons2d.P.xpoints),
 							Util.intArrayToDouble(polygons2d.P.ypoints), z, polygons2d.c);

@@ -34,7 +34,7 @@ public class Util {
 		    	data = str.split(";");
 		    	x = processLine(data[0].split(","));
 		    	y = processLine(data[1].split(","));
-		    	Screen.DrawablePolygons[Screen.NumberOfPolygons] = new Polygon2D(x,y, Color.black);
+		    	Screen.DrawablePolygons[Screen.NumberOfPolygons] = new Polygon2D(x,y, Color.black); 
 		    	Screen.NumberOfPatches++;
 		    }
 		    Screen.patches = new Polygon2D[Screen.NumberOfPatches];
