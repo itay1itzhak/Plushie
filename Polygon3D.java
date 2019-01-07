@@ -71,7 +71,6 @@ public class Polygon3D {
 		return new Vector(Nx,Ny,Nz);
 	}
 	
-	//TODO - This function is not good! fix pls
 	public static double getTriangleArea(double[] x, double[] y, double[] z) {
 		Vector u = new Vector(x[1] - x[0],y[1] - y[0],z[1] - z[0]);
 		Vector v = new Vector(x[2] - x[1],y[2] - y[1],z[2] - z[1]);

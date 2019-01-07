@@ -25,27 +25,18 @@ public class Screen extends JPanel implements KeyListener{
 		addKeyListener(this);
 		setFocusable(true);
 		//############ 2d patches ############
-		//DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{10, 200, 10}, new double[]{10, 200, 400}, Color.black);
-		//DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{10, 50, 100, 200, 150, 10}, new double[]{450, 550, 600, 650, 700, 800}, Color.blue);
+//		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{10, 200, 10}, new double[]{10, 200, 400}, Color.black);
+//		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{10, 50, 100, 200, 150, 10}, new double[]{450, 550, 600, 650, 700, 800}, Color.blue);
 		
 		//############ 3d patches ############
-		Util.textToPatches(PATH);
-//		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{1, 2, 2, 2, 2}, new double[]{1, 3, 3, 3, 4}, Color.black);
-//		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{2, 3, 3, 3, 3}, new double[]{2, 4, 4, 4, 5}, Color.blue);
-//		DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{1, 2, 3, 3, 3, 3}, new double[]{1, 2, 4, 4, 4, 5}, Color.pink);
-//		//DrawablePolygons[NumberOfPolygons] = new Polygon2D(new double[]{1, 2, 2}, new double[]{1, 3, 4}, Color.black);
-//		patches[0] = DrawablePolygons[0];
-//		patches[1] = DrawablePolygons[1];
-//		patches[2] = DrawablePolygons[2];	
-//
-//		
+		Util.textToPatches(PATH);	
 		patches3D = Simulation.arrayFrom2Dto3D(patches,NumberOfPatches);
 		Simulation.inflateArray(patches3D,NumberOfPatches);
 		
 		for (int i=0; i<NumberOf3Polygon3Ds;i++)
 			Polygon3Ds[i] = patches3D[i];
 		//cube
-		//drawCube();
+		Util.drawCube();
 	}
 	
 	public void paintComponent(Graphics g)

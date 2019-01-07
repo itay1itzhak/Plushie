@@ -16,7 +16,7 @@ public class Util {
 	}
 	
 	public static double getDistance(Vector vi,Vector vj){
-		return Math.sqrt((vi.x-vj.x)*(vi.x-vj.x) + (vi.x-vj.y)*(vi.x-vj.y) + (vi.x-vj.z)*(vi.x-vj.z));
+		return Math.sqrt((vi.x-vj.x)*(vi.x-vj.x) + (vi.y-vj.y)*(vi.y-vj.y) + (vi.z-vj.z)*(vi.z-vj.z));
 	}
 	
 	//Not Complete
@@ -71,6 +71,23 @@ public class Util {
 		Screen.Polygon3Ds[Screen.NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 2, 2, 0}, new double[]{2, 2, 2, 2},  new double[]{0, 0, 3, 3}, Color.gray);
 		Screen.Polygon3Ds[Screen.NumberOf3Polygon3Ds] = new Polygon3D(new double[]{0, 0, 0, 0}, new double[]{0, 2, 2, 0},  new double[]{0, 0, 3, 3}, Color.gray);
 		Screen.Polygon3Ds[Screen.NumberOf3Polygon3Ds] = new Polygon3D(new double[]{2, 2, 2, 2}, new double[]{0, 2, 2, 0},  new double[]{0, 0, 3, 3}, Color.gray);
+	}
+	
+	public static void deepArraycopy(Polygon3D[] poly3d,ShallowPolygon3D[] poly3dOrginal){
+		double[] x,y,z;
+		for (int i=0; i<poly3d.length; i++){
+			x = new double[poly3d[i].x.length];
+			y = new double[poly3d[i].y.length];
+			z = new double[poly3d[i].z.length];
+			for (int j=0; j<x.length; j++){
+				x[j] = poly3d[i].x[j];
+				y[j] = poly3d[i].y[j];
+				z[j] = poly3d[i].z[j];
+			}			
+			poly3dOrginal[i] = new ShallowPolygon3D(x,y,z,poly3d[i].c);
+		}
+
+
 	}
 
 }

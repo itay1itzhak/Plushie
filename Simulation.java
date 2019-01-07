@@ -14,9 +14,9 @@ public class Simulation {
 	 public final static double ALPHA = 0.02;
 	 public final static double BETTA = 1;
 	
-	public static void inflate(Polygon3D[] poly3d, int patchNum, int numOfPatches) {
-		Polygon3D[] poly3dOrginal =  new Polygon3D[poly3d.length];
-		System.arraycopy(poly3d,0,poly3dOrginal,0,poly3d.length);
+	public static void inflate(Polygon3D[] poly3d,ShallowPolygon3D[] poly3dOrginal, int patchNum, int numOfPatches) {
+		System.out.println(poly3d[0].x[0]);
+		System.out.println(poly3dOrginal[0].x[0]);
 		for (int i=0; i<NUM_OF_CYCLES_INFALTE; i++){
 			internalPressure(poly3d, patchNum, numOfPatches);
 			for (int j=0; j<NUM_OF_CYCLES_ADJUST; j++)
@@ -39,13 +39,9 @@ public class Simulation {
 			    area = poly3d[neighbor].area;
 			    sumOfAllareas += area;
 			    sumOfAllDisplacment = sumOfAllDisplacment.addVector(normal.mulScalar(ALPHA * area));
-			    //System.out.println("neighbor: "+neighbor+" area: "+area);
-			    //System.out.println("add to dis: "+(ALPHA * area));
 			}
 			if (sumOfAllareas > 0)
 				sumOfAllDisplacment.mulScalar(1/sumOfAllareas);
-			
-			//System.out.println("dis x:"+sumOfAllDisplacment.x+" y:"+sumOfAllDisplacment.y+" z:"+sumOfAllDisplacment.z);
 			
 			poly3d[patchNum].x[i] += sumOfAllDisplacment.x;
 			poly3d[patchNum].y[i] += sumOfAllDisplacment.y;
@@ -76,13 +72,11 @@ public class Simulation {
 		return false;
 	}
 	
-	//TODO
-	public static void adjustEdges(Polygon3D[] poly3d, Polygon3D[] poly3dOrginal, int patchNum, int numOfPatches) {
+	public static void adjustEdges(Polygon3D[] poly3d, ShallowPolygon3D[] poly3dOrginal, int patchNum, int numOfPatches) {
 
 		for (int i=0; i<poly3d[patchNum].x.length; i++){ // for each vertex
 			Vector sumOfAllDisplacment = new Vector(0,0,0);
 			double sumOfAllareas = 0;
-			double sumOfAllareasWithForces = 0;
 			double area;
 			
 			Set<Integer> neighbors = getPolyNeighborsIndices(poly3d, patchNum, numOfPatches,i);
@@ -95,8 +89,9 @@ public class Simulation {
 			
 			for (int neighbor : neighbors) {
 				neighborVercties = getNeighborVercties(poly3d[patchNum],poly3d[neighbor],i);
-				neighborVerctiesOrg = getNeighborVercties(poly3dOrginal[patchNum],poly3dOrginal[neighbor],i);
-				for (int j=0; j< neighborVercties.size(); j++){
+				neighborVerctiesOrg = getShallowNeighborVercties(poly3dOrginal[patchNum],poly3dOrginal[neighbor],i);
+				
+				for (int j=0; j< Math.min(neighborVercties.size(),neighborVerctiesOrg.size()); j++){
 					vj = neighborVercties.get(j);
 					vjOrg = neighborVerctiesOrg.get(j);
 					area = poly3d[neighbor].area;
@@ -104,13 +99,10 @@ public class Simulation {
 				    force = getForce(vi,vj,viOrg,vjOrg);
 				    sumOfAllDisplacment = sumOfAllDisplacment.addVector(force.mulScalar(BETTA * area));
 				}
-			    //System.out.println("neighbor: "+neighbor+" area: "+area);
-			    //System.out.println("add to dis: "+(ALPHA * area));
+			    
 			}
 			if (sumOfAllareas > 0)
 				sumOfAllDisplacment.mulScalar(1/sumOfAllareas);
-			//if ((sumOfAllDisplacment.x!=0)||(sumOfAllDisplacment.y!=0)||(sumOfAllDisplacment.z!=0))
-				System.out.println("dis x:"+sumOfAllDisplacment.x+" y:"+sumOfAllDisplacment.y+" z:"+sumOfAllDisplacment.z);
 			
 			poly3d[patchNum].x[i] += sumOfAllDisplacment.x;
 			poly3d[patchNum].y[i] += sumOfAllDisplacment.y;
@@ -119,6 +111,18 @@ public class Simulation {
 	}
 	
 	public static List<Vector> getNeighborVercties(Polygon3D current,Polygon3D neighbor,int vertexIndex){
+		List<Vector> neighborVercties = new ArrayList<Vector>();
+		for (int i=0; i<neighbor.x.length;i++){
+			if ((current.x[vertexIndex] != neighbor.x[i])||
+					(current.y[vertexIndex] != neighbor.y[i])||
+					(current.z[vertexIndex] != neighbor.z[i])){
+				neighborVercties.add(new Vector(neighbor.x[i],neighbor.y[i],neighbor.z[i]));
+			}//if
+		}//for
+		return neighborVercties;
+	}
+	
+	public static List<Vector> getShallowNeighborVercties(ShallowPolygon3D current,ShallowPolygon3D neighbor,int vertexIndex){
 		List<Vector> neighborVercties = new ArrayList<Vector>();
 		for (int i=0; i<neighbor.x.length;i++){
 			if ((current.x[vertexIndex] != neighbor.x[i])||
@@ -143,8 +147,10 @@ public class Simulation {
 	
 	
 	public static void inflateArray(Polygon3D[] poly3d, int numOfPatches) {
+		ShallowPolygon3D[] poly3dOrginal =  new ShallowPolygon3D[poly3d.length];
+		Util.deepArraycopy(poly3d,poly3dOrginal);
 		for (int i=0; i<numOfPatches; i++)
-			inflate(poly3d, i, numOfPatches);
+			inflate(poly3d,poly3dOrginal, i, numOfPatches);
 	}
 	
 	
