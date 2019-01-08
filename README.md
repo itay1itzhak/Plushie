@@ -1,4 +1,4 @@
-# Plushie - TAU project in 3D java
+# Plushie - TAU project in 3D java (directed by Amit H. Bermano)
 This project enable user to view the transformation from 2D patches to 3D plushie toy 3D model.  
 Calculator - for functions for viewing in 3D mode  
 Plushie - the main Jframe class to view  
